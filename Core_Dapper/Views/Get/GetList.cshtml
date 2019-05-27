@@ -1,0 +1,51 @@
+﻿@model IEnumerable<IAlbumDto>
+@{
+    ViewData["Title"] = "GetList";
+}
+
+<h2>GetList</h2>
+
+<div>
+    <div>
+        <a href="/Home/Index" class="btn btn-default">Back</a>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Album ID
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var album in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(m => album.AlbumID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => album.AlbumName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => album.Artist)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => album.Genre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => album.ReleaseYear)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => album.NumberOfTracks)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => album.Cost)
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+
