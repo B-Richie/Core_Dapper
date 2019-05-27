@@ -33,7 +33,7 @@ namespace Core_Dapper.Services
             _mapper = mapper;
             _DatabaseConnections = databaseConnections;
             _parameterFactory = parameterFactory;
-            Connection = _DatabaseConnections.OracleConnections.Where(alias => alias.Alias == "WebRlc").FirstOrDefault().dbConnection;
+            Connection = _DatabaseConnections.MSSqlConnections.Where(alias => alias.Alias == "Music").FirstOrDefault().dbConnection;
         }
 
         public async Task<IEnumerable<IArtistDto>> GetListAsync()
@@ -109,7 +109,7 @@ namespace Core_Dapper.Services
             var dbModel = _mapper.Map<Artist>(model);
             var param = new DynamicParameters(dbModel);
             param.Add("ArtistID", model.ArtistID, DbType.Int32, ParameterDirection.Input);
-            const string sql = "update dbo.Artist a set a.ArtistName = :ArtistName where a.ArtistID = @ArtistID";
+            const string sql = "update dbo.Artist a set a.ArtistName = @ArtistName where a.ArtistID = @ArtistID";
             var result = await ExecuteAsync(sql, param);
             return result;
         }
@@ -119,7 +119,7 @@ namespace Core_Dapper.Services
             var dbModel = _mapper.Map<Artist>(model);
             var param = new DynamicParameters(dbModel);
             param.Add("ArtistID", model.ArtistID, DbType.Int32, ParameterDirection.Input);
-            const string sql = "update dbo.Artist a set a.ArtistName = :ArtistName where a.ArtistID = @ArtistID";
+            const string sql = "update dbo.Artist a set a.ArtistName = @ArtistName where a.ArtistID = @ArtistID";
             var result = Execute(sql, param);
             return result;
         }
@@ -129,11 +129,11 @@ namespace Core_Dapper.Services
             var dbModel = _mapper.Map<Artist>(model);
             var param = new DynamicParameters(dbModel);
             param.Add("ArtistID", null, DbType.Int32, ParameterDirection.Output);
-            const string sql = "insert into dbo.Artist (ArtistName) VALUES ( :ArtistNameINT) Output Inserted.ID";
-
+            const string sql = "insert into dbo.Artist (ArtistName) VALUES ( @ArtistName)";
+            
             var result = Execute(sql, param);
-            var Id = param.Get<int>("Id");
-            return Id;
+
+            return result;
         }
 
         public async Task<int> InsertAsync(IArtistDto model)
@@ -141,11 +141,10 @@ namespace Core_Dapper.Services
             var dbModel = _mapper.Map<Artist>(model);
             var param = new DynamicParameters(dbModel);
             param.Add("ArtistID", null, DbType.Int32, ParameterDirection.Output);
-            const string sql = "insert into dbo.Artist (ArtistName) VALUES ( :ArtistNameINT) Output Inserted.ID";
+            const string sql = "insert into dbo.Artist (ArtistName) VALUES ( @ArtistName)";
 
             var result = await ExecuteAsync(sql, param);
-            var Id = param.Get<int>("Id");
-            return Id;
+            return result;
         }
 
         public Task<int> ExecuteTransaction(IArtistDto model)

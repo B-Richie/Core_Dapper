@@ -45,7 +45,7 @@ namespace Core_Dapper.Controllers
         //    }
         //}
 
-        public async Task<IActionResult> InsertAsync(IArtistDto model, string btnInsert)
+        public async Task<IActionResult> InsertAsync(ArtistDto model, string btnInsert)
         {
             try
             {
