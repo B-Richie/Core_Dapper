@@ -1,4 +1,4 @@
-﻿@model IEnumerable<IAlbumDto>
+﻿@model IEnumerable<IArtistDto>
 
 @{
     ViewData["Title"] = "GetListAsync";
@@ -19,30 +19,15 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var album in Model)
+            @foreach (var artist in Model)
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(m => album.AlbumID)
+                        @Html.DisplayFor(m => artist.ArtistID)
                     </td>
                     <td>
-                        @Html.DisplayFor(m => album.AlbumName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(m => album.Artist)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(m => album.Genre)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(m => album.ReleaseYear)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(m => album.NumberOfTracks)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(m => album.Cost)
-                    </td>
+                        @Html.DisplayFor(m => artist.ArtistName)
+                    </td>                   
                 </tr>
             }
 

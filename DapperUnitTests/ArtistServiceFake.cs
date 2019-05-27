@@ -68,20 +68,16 @@ namespace DapperUnitTests
             throw new NotImplementedException();
         }
 
-        public IEnumerable<IArtistDto> GetList(int activityToolType)
+        public IEnumerable<IArtistDto> GetList()
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<IArtistDto>> GetListAsync(int activityToolType, int activityId)
+        public Task<IEnumerable<IArtistDto>> GetListAsync()
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<IArtistDto>> GetListAsync(int activityToolType)
-        {
-            throw new NotImplementedException();
-        }
 
         public IArtistDto GetOverride(int id)
         {

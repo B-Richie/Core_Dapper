@@ -1,4 +1,4 @@
-﻿@model IAlbumDto
+﻿@model IArtistDto
 @{
     ViewData["Title"] = "ExecuteAsync";
 }
@@ -7,20 +7,10 @@
 
 <form>
     <dl>
-        <dt>@Html.LabelFor(m => m.AlbumID)</dt>
-        <dd>@Html.DisplayFor(m => m.AlbumID)</dd>
-        <dt>@Html.LabelFor(m => m.AlbumName)</dt>
-        <dd>@Html.DisplayFor(m => m.AlbumName)</dd>
-        <dt>@Html.LabelFor(m => m.Artist)</dt>
-        <dd>@Html.DisplayFor(m => m.Artist)</dd>
-        <dt>@Html.LabelFor(m => m.Genre)</dt>
-        <dd>@Html.DisplayFor(m => m.Genre)</dd>
-        <dt>@Html.LabelFor(m => m.ReleaseYear)</dt>
-        <dd>@Html.DisplayFor(m => m.ReleaseYear)</dd>
-        <dt>@Html.LabelFor(m => m.NumberOfTracks)</dt>
-        <dd>@Html.DisplayFor(m => m.NumberOfTracks)</dd>
-        <dt>@Html.LabelFor(m => m.Cost)</dt>
-        <dd>@Html.DisplayFor(m => m.Cost)</dd>
+        <dt>@Html.LabelFor(m => m.ArtistID)</dt>
+        <dd>@Html.DisplayFor(m => m.ArtistID)</dd>
+        <dt>@Html.LabelFor(m => m.ArtistName)</dt>
+        <dd>@Html.DisplayFor(m => m.ArtistName)</dd>        
     </dl>
 </form>
 <div>

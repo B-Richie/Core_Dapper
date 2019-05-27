@@ -27,7 +27,7 @@ namespace Core_Dapper.Controllers
             {
                 var id = 237;
                 _logger.LogInformation("Getting list of activity results for {ID}", id);
-                var result = _svc.GetList(id);                
+                var result = _svc.GetList();                
 
                 if (result == null)
                 {
@@ -70,7 +70,7 @@ namespace Core_Dapper.Controllers
         {
             try
             {
-                var result = await _svc.GetListAsync(237);
+                var result = await _svc.GetListAsync();
 
                 if (result == null)
                     return NotFound();
@@ -88,8 +88,7 @@ namespace Core_Dapper.Controllers
         {
             try
             {
-                var result = _svc.GetFirstOrDefault(8268);
-                //var result2 = _svc.GetFirstOrDefault(8267);
+                var result = _svc.GetFirstOrDefault(5);
 
                 if (result == null)
                     return NotFound();
@@ -107,10 +106,7 @@ namespace Core_Dapper.Controllers
         {
             try
             {
-                var result = await _svc.GetFirstOrDefaultAsync(6419);
-                //if (result != null)
-                //    return RedirectToAction("GetFirstorDefaultAsync2", "Get2");
-
+                var result = await _svc.GetFirstOrDefaultAsync(10);
 
                 if (result == null)
                     return NotFound();

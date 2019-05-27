@@ -1,4 +1,4 @@
-﻿@model IAlbumDto
+﻿@model IArtistDto
 @{
     ViewData["Title"] = "Insert";
 }
@@ -7,20 +7,8 @@
 
 <form method="post" asp-action="InsertAsync" asp-controller="Insert">
     <dl>
-        <dt>@Html.LabelFor(m => m.AlbumID)</dt>
-        <dd>@Html.TextBoxFor(m => m.AlbumID)</dd>
-        <dt>@Html.LabelFor(m => m.AlbumName)</dt>
-        <dd>@Html.TextBoxFor(m => m.AlbumName)</dd>
-        <dt>@Html.LabelFor(m => m.Artist)</dt>
-        <dd>@Html.TextBoxFor(m => m.Artist)</dd>
-        <dt>@Html.LabelFor(m => m.Genre)</dt>
-        <dd>@Html.TextBoxFor(m => m.Genre)</dd>
-        <dt>@Html.LabelFor(m => m.ReleaseYear)</dt>
-        <dd>@Html.TextBoxFor(m => m.ReleaseYear)</dd>
-        <dt>@Html.LabelFor(m => m.NumberOfTracks)</dt>
-        <dd>@Html.TextBoxFor(m => m.NumberOfTracks)</dd>
-        <dt>@Html.LabelFor(m => m.Cost)</dt>
-        <dd>@Html.TextBoxFor(m => m.Cost)</dd>
+        <dt>@Html.LabelFor(m => m.ArtistName)</dt>
+        <dd>@Html.TextBoxFor(m => m.ArtistName)</dd>        
     </dl>
     <input type="submit" class="btn btn-default" value="Insert" name="btnInsert" />
     <input type="submit" class="btn btn-default" value="InsertAsync" name="btnInsert" />

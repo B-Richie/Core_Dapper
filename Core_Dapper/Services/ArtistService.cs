@@ -22,7 +22,7 @@ namespace Core_Dapper.Services
 
         protected override Artist Get<Artist>(int id)
         {
-            SQL = "Select * from web_rlc_adm.b2b_activity_queue b where b.activity_id = :id";
+            SQL = "Select * from dbo.Artist a where a.ArtistID = :id";
 
             var result = base.Get<Artist>(id);
             return result;
@@ -36,44 +36,39 @@ namespace Core_Dapper.Services
             Connection = _DatabaseConnections.OracleConnections.Where(alias => alias.Alias == "WebRlc").FirstOrDefault().dbConnection;
         }
 
-        public async Task<IEnumerable<IArtistDto>> GetListAsync(int activityToolType)
+        public async Task<IEnumerable<IArtistDto>> GetListAsync()
         {
-            const string sql = "Select * from web_rlc_adm.b2b_activity_queue b where b.activity_tool_type = :activityToolType";
-            var result = await QueryAsync<Artist>(sql, new { activityToolType });
+            const string sql = "Select * from dbo.Artist";
+            var result = await QueryAsync<Artist>(sql);
             var mappedResult = _mapper.Map<IEnumerable<IArtistDto>>(result);
             return mappedResult;
         }
 
-        public IEnumerable<IArtistDto> GetList(int activityToolType)
+        public IEnumerable<IArtistDto> GetList()
         {
-            const string sql = "Select * from web_rlc_adm.b2b_activity_queue b where b.activity_tool_type = :activityToolType";
-            var result = Query<Artist>(sql, new { activityToolType });
+            const string sql = "Select * from dbo.Artist";
+            var result = Query<Artist>(sql);
             var mappedResult = _mapper.Map<IEnumerable<IArtistDto>>(result);
             return mappedResult;
         }
 
 
-        public async Task<IArtistDto> CallProcedureAsync(string quoteNumber)
+        public async Task<IArtistDto> CallProcedureAsync(string Id)
         {
-            const string sql = "web_rlc_adm.GET_RATE_QUOTE";
+            const string sql = "GET_ARTIST";
             var param2 = _parameterFactory.CreateOracleParameters();
-            //var param2 = new OracleDynamicParameters();
-            param2.Add("pi_quote_number", OracleDbType.Varchar2, ParameterDirection.Input, quoteNumber);
-            param2.Add("po_rate_quote_xml_clob", OracleDbType.RefCursor, ParameterDirection.Output);
-            //param2.Add("po_errMsg", OracleDbType.Varchar2, ParameterDirection.Output, null, 32767);
-            //param2.Add("po_errMsg", OracleDbType.Varchar2, ParameterDirection.Output);
-
+            param2.Add("artistId", OracleDbType.Int32, ParameterDirection.Input, Id);
+            param2.Add("artist", OracleDbType.RefCursor, ParameterDirection.Output);
             var result = await QueryFirstOrDefaultAsync<Artist>(sql, param2, null, null, CommandType.StoredProcedure);
             var mappedResult = _mapper.Map<IArtistDto>(result);
             return mappedResult;
         }
-        public IArtistDto CallProcedure(string quoteNumber)
+        public IArtistDto CallProcedure(string Id)
         {
-            const string sql = "web_rlc_adm.GET_RATE_QUOTE";
+            const string sql = "GET_ARTIST";
             var param2 = _parameterFactory.CreateOracleParameters();
-            //var param2 = new OracleDynamicParameters();
-            param2.Add("PI_QUOTE_NUMBER", OracleDbType.Varchar2, ParameterDirection.Input, quoteNumber);
-            param2.Add("PO_RATE_QUOTE", OracleDbType.RefCursor, direction: ParameterDirection.Output);
+            param2.Add("artistId", OracleDbType.Int32, ParameterDirection.Input, Id);
+            param2.Add("artist", OracleDbType.RefCursor, ParameterDirection.Output);
             var result = QueryFirstOrDefault<Artist>(sql, param2, null, null, CommandType.StoredProcedure);
             var mappedResult = _mapper.Map<IArtistDto>(result);
             return mappedResult;
@@ -81,7 +76,7 @@ namespace Core_Dapper.Services
 
         public IArtistDto GetFirstOrDefault(int id)
         {
-            const string sql = "Select * from web_rlc_adm.b2b_activity_queue b where b.activity_id = :id";
+            const string sql = "Select * from dbo.Artist a where a.ArtistID = @id";
             var result = QueryFirstOrDefault<Artist>(sql, new { id });
             var model = _mapper.Map<IArtistDto>(result);
             return model;
@@ -89,7 +84,7 @@ namespace Core_Dapper.Services
 
         public async Task<IArtistDto> GetFirstOrDefaultAsync(int id)
         {
-            const string sql = "Select * from web_rlc_adm.b2b_activity_queue b where b.activity_id = :id";
+            const string sql = "Select * from dbo.Artist a where a.ArtistID = @id";
             var result = await QueryFirstOrDefaultAsync<Artist>(sql, new { id });
             var model = _mapper.Map<IArtistDto>(result);
             return model;
@@ -97,14 +92,14 @@ namespace Core_Dapper.Services
 
         public async Task<int> DeleteAsync(decimal id)
         {
-            const string sql = "Delete from web_rlc_adm.b2b_activity_queue b where b.activity_id = :id";
+            const string sql = "Delete from dbo.Artist a where a.ArtistID = :id";
             var result = await ExecuteAsync(sql, new { id });
             return result;
         }
 
         public int Delete(decimal id)
         {
-            const string sql = "Delete from web_rlc_adm.b2b_activity_queue b where b.activity_id = :id";
+            const string sql = "Delete from dbo.Artist a where a.ArtistID = :id";
             var result = Execute(sql, new { id });
             return result;
         }
@@ -113,8 +108,8 @@ namespace Core_Dapper.Services
         {
             var dbModel = _mapper.Map<Artist>(model);
             var param = new DynamicParameters(dbModel);
-            param.Add("Id", model.ArtistID, DbType.Decimal, ParameterDirection.Input);
-            const string sql = "update WEB_RLC_ADM.B2B_ACTIVITY_QUEUE b set b.CREATED_ON = :CREATED_ON, b.ACTIVITY_TOOL_TYPE = :ACTIVITY_TOOL_TYPE, b.ACTIVITY_USER_ID = :ACTIVITY_USER_ID, b.ACTIVITY_STATUS = :ACTIVITY_STATUS, b.SHOW_ON_HOME_PAGE = :SHOW_ON_HOME_PAGE, b.REQUEST_XML = :REQUEST_XML, b.LAST_UPDATE = :LAST_UPDATE, b.DATA_1 = :DATA_1, b.DATA_2 = :DATA_2, b.DATA_3 = :DATA_3, b.DATA_4 = :DATA_4, b.DATA_5 = :DATA_5, b.SUCCESS = :SUCCESS, b.RESPONSE_XML = :RESPONSE_XML, b.ERROR_MESSAGE = :ERROR_MESSAGE, b.SERVICE_ENDPOINT = :SERVICE_ENDPOINT where b.activity_id = :Id";
+            param.Add("ArtistID", model.ArtistID, DbType.Int32, ParameterDirection.Input);
+            const string sql = "update dbo.Artist a set a.ArtistName = :ArtistName where a.ArtistID = @ArtistID";
             var result = await ExecuteAsync(sql, param);
             return result;
         }
@@ -123,8 +118,8 @@ namespace Core_Dapper.Services
         {
             var dbModel = _mapper.Map<Artist>(model);
             var param = new DynamicParameters(dbModel);
-            param.Add("Id", model.ArtistID, DbType.Decimal, ParameterDirection.Input);
-            const string sql = "update WEB_RLC_ADM.B2B_ACTIVITY_QUEUE b set b.CREATED_ON = :CREATED_ON, b.ACTIVITY_TOOL_TYPE = :ACTIVITY_TOOL_TYPE, b.ACTIVITY_USER_ID = :ACTIVITY_USER_ID, b.ACTIVITY_STATUS = :ACTIVITY_STATUS, b.SHOW_ON_HOME_PAGE = :SHOW_ON_HOME_PAGE, b.REQUEST_XML = :REQUEST_XML, b.LAST_UPDATE = :LAST_UPDATE, b.DATA_1 = :DATA_1, b.DATA_2 = :DATA_2, b.DATA_3 = :DATA_3, b.DATA_4 = :DATA_4, b.DATA_5 = :DATA_5, b.SUCCESS = :SUCCESS, b.RESPONSE_XML = :RESPONSE_XML, b.ERROR_MESSAGE = :ERROR_MESSAGE, b.SERVICE_ENDPOINT = :SERVICE_ENDPOINT where b.activity_id = :Id";
+            param.Add("ArtistID", model.ArtistID, DbType.Int32, ParameterDirection.Input);
+            const string sql = "update dbo.Artist a set a.ArtistName = :ArtistName where a.ArtistID = @ArtistID";
             var result = Execute(sql, param);
             return result;
         }
@@ -134,7 +129,7 @@ namespace Core_Dapper.Services
             var dbModel = _mapper.Map<Artist>(model);
             var param = new DynamicParameters(dbModel);
             param.Add("ArtistID", null, DbType.Int32, ParameterDirection.Output);
-            const string sql = "insert into WEB_RLC_ADM.B2B_ACTIVITY_QUEUE (ACTIVITY_ID, CREATED_ON, ACTIVITY_TOOL_TYPE, ACTIVITY_USER_ID, ACTIVITY_STATUS, SHOW_ON_HOME_PAGE, REQUEST_XML, LAST_UPDATE, DATA_1, DATA_2, DATA_3, DATA_4, DATA_5, SUCCESS, RESPONSE_XML, ERROR_MESSAGE, SERVICE_ENDPOINT) VALUES ( web_rlc_adm.B2B_ACTIVITY_QUEUE_SEQ.NextVal, :CREATED_ON, :ACTIVITY_TOOL_TYPE, :ACTIVITY_USER_ID, :ACTIVITY_STATUS, :SHOW_ON_HOME_PAGE, :REQUEST_XML, :LAST_UPDATE, :DATA_1, :DATA_2, :DATA_3, :DATA_4, :DATA_5, :SUCCESS, :RESPONSE_XML, :ERROR_MESSAGE, :SERVICE_ENDPOINT) returning ACTIVITY_ID into :Id";
+            const string sql = "insert into dbo.Artist (ArtistName) VALUES ( :ArtistNameINT) Output Inserted.ID";
 
             var result = Execute(sql, param);
             var Id = param.Get<int>("Id");
@@ -146,7 +141,7 @@ namespace Core_Dapper.Services
             var dbModel = _mapper.Map<Artist>(model);
             var param = new DynamicParameters(dbModel);
             param.Add("ArtistID", null, DbType.Int32, ParameterDirection.Output);
-            const string sql = "insert into WEB_RLC_ADM.B2B_ACTIVITY_QUEUE (ACTIVITY_ID, CREATED_ON, ACTIVITY_TOOL_TYPE, ACTIVITY_USER_ID, ACTIVITY_STATUS, SHOW_ON_HOME_PAGE, REQUEST_XML, LAST_UPDATE, DATA_1, DATA_2, DATA_3, DATA_4, DATA_5, SUCCESS, RESPONSE_XML, ERROR_MESSAGE, SERVICE_ENDPOINT) VALUES ( web_rlc_adm.B2B_ACTIVITY_QUEUE_SEQ.NextVal, :CREATED_ON, :ACTIVITY_TOOL_TYPE, :ACTIVITY_USER_ID, :ACTIVITY_STATUS, :SHOW_ON_HOME_PAGE, :REQUEST_XML, :LAST_UPDATE, :DATA_1, :DATA_2, :DATA_3, :DATA_4, :DATA_5, :SUCCESS, :RESPONSE_XML, :ERROR_MESSAGE, :SERVICE_ENDPOINT) returning ACTIVITY_ID into :Id";
+            const string sql = "insert into dbo.Artist (ArtistName) VALUES ( :ArtistNameINT) Output Inserted.ID";
 
             var result = await ExecuteAsync(sql, param);
             var Id = param.Get<int>("Id");

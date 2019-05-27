@@ -8,10 +8,10 @@ namespace Core_Dapper.Services
 {
     public interface IArtistService
     {
-        Task<IEnumerable<IArtistDto>> GetListAsync(int activityToolType);
+        Task<IEnumerable<IArtistDto>> GetListAsync();
         Task<IArtistDto> GetFirstOrDefaultAsync(int id);
         IArtistDto GetFirstOrDefault(int id);
-        IEnumerable<IArtistDto> GetList(int activityToolType);
+        IEnumerable<IArtistDto> GetList();
         Task<IArtistDto> CallProcedureAsync(string quoteNumber);
         IArtistDto CallProcedure(string quoteNumber);
         Task<int> InsertAsync(IArtistDto model);
