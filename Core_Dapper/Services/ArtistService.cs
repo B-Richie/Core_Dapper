@@ -92,14 +92,14 @@ namespace Core_Dapper.Services
 
         public async Task<int> DeleteAsync(decimal id)
         {
-            const string sql = "Delete from dbo.Artist a where a.ArtistID = :id";
+            const string sql = "Delete from dbo.Artist a where a.ArtistID = @id";
             var result = await ExecuteAsync(sql, new { id });
             return result;
         }
 
         public int Delete(decimal id)
         {
-            const string sql = "Delete from dbo.Artist a where a.ArtistID = :id";
+            const string sql = "Delete from dbo.Artist a where a.ArtistID = @id";
             var result = Execute(sql, new { id });
             return result;
         }
