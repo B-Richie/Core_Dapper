@@ -1,9 +1,9 @@
-# Core_Dapper
-Core 2.2 application using Dapper
-		Simple web application using Dapper as an ORM
+# ASP Core 2.2 Web Application Using Dapper
+
+Simple IOC web application using Dapper as an ORM
 
 
-How to use:
+# How to use:
 
 	appsettings.json
 		Add your providers and connection strings as follows:
