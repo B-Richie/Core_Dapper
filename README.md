@@ -5,8 +5,10 @@ Simple IOC web application using Dapper as an ORM
 
 # How to use:
 
-	appsettings.json
-		Add your providers and connection strings as follows:
+appsettings.json
+
+Add your providers and connection strings as follows:
+
 			"DatabaseConnections": {
 			    "OracleConnections": [
 			      {
