@@ -4,3 +4,24 @@ Core 2.2 application using Dapper
 
 
 How to use:
+
+	appsettings.json
+		Add your providers and connection strings as follows:
+			"DatabaseConnections": {
+			    "OracleConnections": [
+			      {
+				"Alias": "Optional",        
+				"ConnectionString": "Required"
+			      },
+			      {
+				"Alias": "Optional",        
+				"ConnectionString": "Required"
+			      }
+			    ],
+			    "MSSqlConnections": [
+			      {
+				"Alias": "Optional",        
+				"ConnectionString": "Required"
+			      }
+			    ]
+			  }
