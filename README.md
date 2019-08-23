@@ -69,3 +69,29 @@ DatabaseConnections-DAL class object that stores all of the db connections from 
 IOracleParameterFactory-factory class for creating parameters for Oracle databases (if needed)
 
 The connection is being set in the constructor for this example. If you're planning to use more than one connection, set the Connection object inside the calling method. If you're planning to use more than one provider, bypass using the Connection object and the DAL all togther and simple call the Dapper methods directly in your service class.
+
+
+Here are some sample methods calling the Dapper DAL:
+
+		public async Task<IEnumerable<IArtistDto>> GetListAsync()
+		{
+		    const string sql = "Select * from dbo.Artist";
+		    var result = await QueryAsync<Artist>(sql);
+		    var mappedResult = _mapper.Map<IEnumerable<IArtistDto>>(result);
+		    return mappedResult;
+		}
+		
+		public async Task<IArtistDto> GetFirstOrDefaultAsync(int id)
+		{
+		    const string sql = "Select * from dbo.Artist a where a.ArtistID = @id";
+		    var result = await QueryFirstOrDefaultAsync<Artist>(sql, new { id });
+		    var model = _mapper.Map<IArtistDto>(result);
+		    return model;
+		}
+
+		public async Task<int> DeleteAsync(decimal id)
+		{
+		    const string sql = "Delete from dbo.Artist a where a.ArtistID = @id";
+		    var result = await ExecuteAsync(sql, new { id });
+		    return result;
+		}
