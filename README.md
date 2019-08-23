@@ -51,3 +51,21 @@ SQL is the string object passed into the DAL if you want to use/set up generic C
 		    var result = base.Get<Artist>(id);
 		    return result;
 		}
+		
+Next, build the constructor:
+
+		public ArtistService(IMapper mapper, DatabaseConnections databaseConnections, IOracleParameterFactory parameterFactory)
+		{
+		    _mapper = mapper;
+		    _DatabaseConnections = databaseConnections;
+		    _parameterFactory = parameterFactory;
+		    Connection = _DatabaseConnections.MSSqlConnections.Where(alias => alias.Alias == "Music").FirstOrDefault().dbConnection;
+		}
+		
+IMapper-Automapper object for mapping db entity to DTO
+
+DatabaseConnections-DAL class object that stores all of the db connections from the appsettings.json file
+
+IOracleParameterFactory-factory class for creating parameters for Oracle databases (if needed)
+
+The connection is being set in the constructor for this example. If you're planning to use more than one connection, set the Connection object inside the calling method. If you're planning to use more than one provider, bypass using the Connection object and the DAL all togther and simple call the Dapper methods directly in your service class.
