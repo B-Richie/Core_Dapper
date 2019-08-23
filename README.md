@@ -41,6 +41,7 @@ Override the two abstract properties from the DAL project:
         	protected override string SQL { get; set; }
 		
 IDbConnection is the connection object passed into the DAL
+
 SQL is the string object passed into the DAL if you want to use/set up generic CRUD methods such as:
 
 		protected override Artist Get<Artist>(int id)
