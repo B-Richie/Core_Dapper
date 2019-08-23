@@ -95,3 +95,14 @@ Here are some sample methods calling the Dapper DAL:
 		    var result = await ExecuteAsync(sql, new { id });
 		    return result;
 		}
+		
+		public IArtistDto CallProcedure(string Id)
+		{
+		    const string sql = "GET_ARTIST";
+		    var param2 = _parameterFactory.CreateOracleParameters();
+		    param2.Add("artistId", OracleDbType.Int32, ParameterDirection.Input, Id);
+		    param2.Add("artist", OracleDbType.RefCursor, ParameterDirection.Output);
+		    var result = QueryFirstOrDefault<Artist>(sql, param2, null, null, CommandType.StoredProcedure);
+		    var mappedResult = _mapper.Map<IArtistDto>(result);
+		    return mappedResult;
+		}
