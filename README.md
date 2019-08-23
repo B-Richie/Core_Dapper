@@ -27,3 +27,10 @@ Add your providers and connection strings as follows:
 			      }
 			    ]
 			  }
+
+Inherit the BaseService class in your service layer:
+
+		public class MyServiceLayer : BaseService
+		{
+		
+		}
